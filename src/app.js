@@ -14,12 +14,14 @@ import MongoStore from "connect-mongo";
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 import { ioConnection } from './controllers/chat.controller.js';
+import { ENVIRONMENT, addLogger, loggerInfo } from './logger/logger.js';
 // import cookieParser from 'cookie-parser';
 // Mongodb URL : "mongodb+srv://Matias-Perroni:fcKP3TXvcILtCNWu@cluster0.ymwavy3.mongodb.net/ecommerce?retryWrites=true&w=majority"
 
 
 dotenv.config();
 const MONGO_URL = process.env.MONGO_URL;
+const PORT = process.env.PORT
 
 //instance of server
 const app = express();
@@ -27,6 +29,10 @@ const app = express();
 //middlewares for body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+app.use(addLogger);
+
 
 // MongoDB connection
 mongoose
@@ -62,8 +68,9 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
 //server http
-const serverHttp = app.listen(8080, () => {
-    console.log("Listening to port 8080");
+const serverHttp = app.listen(PORT, () => {
+    const info = loggerInfo();
+    info.info(`Listening to port: ${PORT} on envirnment: ${ENVIRONMENT}`)
 });
 
 //websocket server
