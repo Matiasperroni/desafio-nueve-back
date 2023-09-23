@@ -70,7 +70,7 @@ app.set("view engine", "handlebars");
 //server http
 const serverHttp = app.listen(PORT, () => {
     const info = loggerInfo();
-    info.info(`Listening to port: ${PORT} on envirnment: ${ENVIRONMENT}`)
+    info.info(`Listening to port: ${PORT} on environment: ${ENVIRONMENT}`)
 });
 
 //websocket server
